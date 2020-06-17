@@ -12,8 +12,10 @@ from django import template
 
 @login_required(login_url="/login/")
 def index(request):
+    from core import settings
+    print(settings)
     opt = {
-        'tavoli' :['t1','t2','t1','t1','t5'],
+        'tavoli' :['t1','t2','t1','t1','t5','t6'],
     }
     return render(request, "index.html", opt)
 
