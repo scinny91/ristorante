@@ -7,21 +7,27 @@
 
 {% block content %}
 
-<div class="pcoded-content" onload="inizializza_tavoli()">
+{% csrf_token %}
+
+<div class="pcoded-content">
     <div class="pcoded-inner-content">
         <!-- [ breadcrumb ] start -->
         <div class="page-header">
             <div class="page-block">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="page-header-title">
                             <h5 class="m-b-10">Tavolo: {{tavolo.codice}} </h5>
+                            <input type="hidden" value="{{tavolo.id_tavolo}}" id="id_tavolo">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" id="consolida" data-toggle="tooltip">Invia in cucina</button>
+                    </div>
+                    <div class="col-md-3">
                         <button type="button" class="btn btn-success" id="chiudi" data-toggle="tooltip">Chiudi e conto</button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <button type="button" class="btn btn-danger" id="svuota" data-toggle="tooltip">Svuota tavolo</button>
                     </div>
                     <div class="col-md-12">
@@ -50,29 +56,19 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Portata</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
+                                                <th>Stato</th>
+                                                <th>Azioni</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>@twitter</td>
-                                            </tr>
+                                            {%for ordine in lista_ordinazioni%}
+                                                <tr>
+                                                    <th scope="row">{{ordine.count}}</th>
+                                                    <td>{{ordine.piatto.nome_piatto}}</td>
+                                                    <td>{{ordine.stato}}</td>
+                                                    <td>Colonna azioni</td>
+                                                </tr>
+                                            {%endfor%}
                                         </tbody>
                                     </table>
                                 </div>

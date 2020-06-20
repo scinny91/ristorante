@@ -1,5 +1,9 @@
 from django.db import models
 
+from backand.Bo.comanda import Comanda
+
+from backand.Controller.utils import GenericException
+
 class Tavolo(models.Model):
 
     id_tavolo = models.AutoField(max_length=11, primary_key=True)
@@ -18,6 +22,10 @@ class Tavolo(models.Model):
         app_label = 'ristorante'
 
     @staticmethod
+    def get(id_tavolo):
+        return Tavolo.objects.get(id_tavolo=id_tavolo)
+
+    @staticmethod
     def get_attivo(codice):
         return Tavolo.objects.get(codice=codice, stato__in=['attivo', 'vuoto'])
 
@@ -25,6 +33,17 @@ class Tavolo(models.Model):
     def get_tavoli():
         return Tavolo.objects.filter(stato__in=['attivo', 'vuoto'], flag_asporto='').order_by('codice')
 
+    def ordina(self, piatto_obj):
+        if piatto_obj.stato != 'valido':
+            raise GenericException('Non possiamo prendere ordini per il piatto "{nome_piatto}" in quanto si trova in stato {stato}'.format(**piatto_obj.__dict__))
+
+        comanda = Comanda()
+        comanda.id_tavolo = self.id_tavolo
+        comanda.id_piatto = piatto_obj.id_piatto
+        comanda.save()
+
+    def get_comande(self):
+        self.lista_comande = Comanda.get_comande_tavolo(id_tavolo=self.id_tavolo)
 
 
 class Asporto(Tavolo):

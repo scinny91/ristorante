@@ -4,6 +4,8 @@ from backand.Bo.menu import Menu
 import itertools
 from operator import itemgetter
 
+from backand.Controller.utils import GenericException
+
 class MenuController():
     def __init__(self):
         self.tavoli = Tavolo.get_tavoli()
@@ -20,7 +22,7 @@ class TavoloController():
             obj_tavolo = Asporto.crea_nuovo()
         else:
             obj_tavolo = Tavolo.get_attivo(codice)
-        piatti_menu = Menu.objects.filter(stato__in=('valido','terminato'))
+        piatti_menu = Menu.get_lista(ordinabili=True)
 
         menu = []
         piatti = []
@@ -37,5 +39,15 @@ class TavoloController():
         dati_out['tavolo'] = obj_tavolo.__dict__
         dati_out['menu'] = menu
 
-        #print(dati_out)
+        obj_tavolo.get_comande()
+        dati_out['lista_ordinazioni'] = obj_tavolo.lista_comande
+
+
         return dati_out
+
+    @staticmethod
+    def aggiungi_piatto(dati_js):
+        tavolo = Tavolo.get(dati_js['id_tavolo'])
+        piatto = Menu.get(dati_js['id_piatto'])
+        tavolo.ordina(piatto)
+        return

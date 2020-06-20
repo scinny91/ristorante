@@ -15,3 +15,14 @@ class Menu(models.Model):
 
     def to_css(self):
         self.btn = 'success' if self.stato == 'valido' else 'danger'
+
+    @staticmethod
+    def get(id_piatto):
+        return Menu.objects.get(id_piatto=id_piatto)
+
+    @staticmethod
+    def get_lista(ordinabili=False):
+        ret = None
+        if ordinabili:
+            ret = Menu.objects.filter(stato__in=('valido', 'terminato'))
+        return ret

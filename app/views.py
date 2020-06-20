@@ -3,14 +3,15 @@
 License: MIT
 Copyright (c) 2019 - present AppSeed.us
 """
-
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django import template
 
 from backand.Controller import controller
+from backand.Controller import utils
 
 @login_required(login_url="/login/")
 def index(request):
@@ -51,3 +52,14 @@ def load_context(request):
 
 
     return context
+
+
+
+
+@csrf_exempt
+@login_required(login_url="/login/")
+@utils.JSON_to_JS
+def aggiungi_piatto(request):
+    controller.TavoloController.aggiungi_piatto(request.POST)
+    return 'Piatto aggiunto correttamente'
+

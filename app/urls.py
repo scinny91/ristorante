@@ -7,6 +7,8 @@ Copyright (c) 2019 - present AppSeed.us
 from django.urls import path, re_path
 from app import views
 
+from backand.Controller import controller
+
 urlpatterns = [
     # Matches any html file - to be used for gentella
     # Avoid using your .html in your resources.
@@ -15,4 +17,5 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
+    path('aggiungi_piatto/', views.aggiungi_piatto),
 ]
