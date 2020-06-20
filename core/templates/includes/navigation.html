@@ -13,14 +13,25 @@
             <div class="navbar-content scroll-div">
                 <ul class="nav pcoded-inner-navbar">
                     <li class="nav-item pcoded-menu-caption">
-                        <label>Tavoli</label>
+                        <label>Sezione tavoli</label>
                     </li>
-                    <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <li class="nav-item pcoded-hasmenu">
                         <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Tavoli</span></a>
 
                         <ul class="pcoded-submenu">
                             {%for i in tavoli%}
-                                <li class=""><a href="/ui-button.html" class="">{{i}}</a></li>
+                                <li class=""><a href="/ui-tavoli.html?codice_tavolo={{i.codice}}&type=tavolo" class="">Tavolo: {{i.codice}}</a></li>
+                            {%endfor%}
+                        </ul>
+
+                    </li>
+                    <li  class="nav-item pcoded-hasmenu">
+                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Asporto</span></a>
+
+                        <ul class="pcoded-submenu">
+                            <li class=""><a href="/ui-tavoli.html?type=tavolo" class="">Nuovo tavolo</a></li>
+                            {%for i in asporto%}
+                                <li class=""><a href="/ui-tavoli.html?codice_tavolo={{i.codice}}&type=tavolo" class="">Tavolo: {{i.codice}}</a></li>
                             {%endfor%}
                         </ul>
 

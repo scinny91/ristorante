@@ -37,5 +37,5 @@ class TavoloController():
         dati_out['tavolo'] = obj_tavolo.__dict__
         dati_out['menu'] = menu
 
-        print(dati_out)
+        #print(dati_out)
         return dati_out

@@ -10,21 +10,19 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 
+from backand.Controller import controller
+
 @login_required(login_url="/login/")
 def index(request):
-    from core import settings
-    print(settings)
-    opt = {
-        'tavoli' :['t1','t2','t1','t1','t5','t6'],
-    }
-    return render(request, "index.html", opt)
+    context = load_context(request)
+    return render(request, "index.html", context)
 
 @login_required(login_url="/login/")
 def pages(request):
-    context = {}
-    context = {
-        'tavoli': ['t1', 't2', 't1', 't1', 't5'],
-    }
+    context = load_context(request)
+
+
+
     # All resource paths end in .html.
     # Pick out the html file name from the url. And load that template.
     try:
@@ -42,3 +40,14 @@ def pages(request):
     
         html_template = loader.get_template( 'error-500.html' )
         return HttpResponse(html_template.render(context, request))
+
+
+def load_context(request):
+    context = controller.MenuController().__dict__ # Menu
+
+    if request.GET.get('type') == 'tavolo':  # pagina tavoli
+        codice_tavolo = request.GET.get('codice_tavolo')
+        context.update(controller.TavoloController.load(codice_tavolo))
+
+
+    return context
