@@ -1,0 +1,91 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Ui Buttons {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content" onload="inizializza_tavoli()">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Tavolo: {{tavolo.codice}} </h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-success" id="chiudi" data-toggle="tooltip">Chiudi e conto</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-danger" id="svuota" data-toggle="tooltip">Svuota tavolo</button>
+                    </div>
+                    <div class="col-md-12">
+                        <h5 class="m-b-10">Menu: </h5>
+                        <div class="card">
+                             {%for cat in menu%}
+                                <div class="card-header">
+                                    <h5>{{cat.categoria}}</h5>
+                                </div>
+                                <div class="card-block">
+                                {%for piatto in cat.piatti%}
+                                    <button type="button" class="btn btn-{{piatto.btn}} pulsante_menu" id="{{piatto.id_piatto}}" data-toggle="tooltip">{{piatto.nome_piatto}}</button>
+                                 {%endfor%}
+                                </div>
+                             {%endfor%}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Ordinazioni: </h5>
+                        </div>
+                        <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Portata</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">2</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>@fat</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Larry</td>
+                                                <td>the Bird</td>
+                                                <td>@twitter</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
